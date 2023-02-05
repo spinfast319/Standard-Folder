@@ -1,0 +1,193 @@
+Artwork,-scans
+Artwork,-scans-
+Artwork,12'' Artworks
+Artwork,300-dpi Scans
+Artwork,ART
+Artwork,Album Art
+Artwork,Album Artwork
+Artwork,Album art
+Artwork,Art
+Artwork,ArtWork
+Artwork,ArtWorks
+Artwork,Artworks
+Artwork,Artwork (discogs)
+Artwork,Artwork 300 DPI
+Artwork,COVERS
+Artwork,Cover
+Artwork,Covers
+Artwork,Covers & Artwork
+Artwork,HQ Scans
+Artwork,HiRes Scans
+Artwork,Images
+Artwork,Images from CD
+Artwork,Images from Limited Edition Vinyl
+Artwork,Images from Limited Edition Vinyl LP
+Artwork,Images from Vinyl
+Artwork,Internet Art
+Artwork,Photo
+Artwork,Pics
+Artwork,Pictures
+Artwork,SCANS
+Artwork,Scans
+Artwork,Scans (HQ)
+Artwork,Scans - PNG @600dpi
+Artwork,_artwork
+Artwork,_scans
+Artwork,_scans@discogs
+Artwork,album art
+Artwork,album artwork
+Artwork,albumart
+Artwork,art
+Artwork,artbook
+Artwork,artwork
+Artwork,artwork & info
+Artwork,cover-art
+Artwork,cover
+Artwork,covers
+Artwork,flyers
+Artwork,images
+Artwork,photos
+Artwork,pics
+Artwork,png
+Artwork,scan
+Artwork,scans
+Artwork,sleeves
+Artwork,Ártwork
+Artwork,Packaging
+Info,+Extra
+Info,.spectros
+Info,00 - Extras
+Info,Booklet
+Info,Extra
+Info,Extras
+Info,Information
+Info,Spectrals
+Info,Spectrograms (lossy)
+Info,Tech_Info
+Info,Testing gaps on silence
+Info,TrackerMetadata
+Info,_Spectrograms
+Info,booklet
+Info,freq analysis
+Info,info
+Info,infos.rtfd
+Info,sample spectrals
+Info,specs
+Info,spect
+Info,spectrogram
+Info,spectrograms
+Info,spectrums
+Info,misc
+Info,Misc
+Info,Geo_logs
+Info,Conversion temp files
+CD1,01
+CD1,CD 01
+CD1,CD 1
+CD1,CD#01
+CD1,CD01
+CD1,D1
+CD1,DISC 1
+CD1,Disc 01
+CD1,Disc 1
+CD1,Disc 1of2
+CD1,Disc 1of3
+CD1,Disc 1of4
+CD1,Disc 1of5
+CD1,Disc1
+CD1,Disc2
+CD1,Disk 1
+CD1,cd1
+CD1,cd 1
+CD1,cd01
+CD1,cd 01
+CD1,disc 01
+CD1,disc01
+CD1,disc 1
+CD1,disc1
+CD2,02
+CD2,CD 02
+CD2,CD 2
+CD2,CD#02
+CD2,CD02
+CD2,D2
+CD2,DISC 2
+CD2,Disc 02
+CD2,Disc 2
+CD2,Disc 2of2
+CD2,Disc 2of3
+CD2,Disc 2of4
+CD2,Disc 2of5
+CD2,Disc2
+CD2,Disk 2
+CD2,cd2
+CD2,cd 2
+CD2,cd02
+CD2,cd 02
+CD2,disc 02
+CD2,disc02
+CD2,disc 2
+CD2,disc2
+CD3,03
+CD3,CD 03
+CD3,CD 3
+CD3,CD#03
+CD3,CD03
+CD3,D3
+CD3,DISC 3
+CD3,Disc 03
+CD3,Disc 3
+CD3,Disc 3of3
+CD3,Disc 3of4
+CD3,Disc 3of5
+CD3,Disc3
+CD3,Disk 3
+CD3,cd3
+CD3,cd 3
+CD3,cd03
+CD3,cd 03
+CD3,disc 03
+CD3,disc03
+CD3,disc 3
+CD3,disc3
+CD4,04
+CD4,CD 04
+CD4,CD 4
+CD4,CD#04
+CD4,CD04
+CD4,D4
+CD4,DISC 4
+CD4,Disc 04
+CD4,Disc 4
+CD4,Disc 4of4
+CD4,Disc 4of5
+CD4,Disc4
+CD4,Disk 4
+CD4,cd4
+CD4,cd 4
+CD4,cd04
+CD4,cd 04
+CD4,disc 04
+CD4,disc04
+CD4,disc 4
+CD4,disc4
+CD5,05
+CD5,CD 05
+CD5,CD 5
+CD5,CD#05
+CD5,CD05
+CD5,D5
+CD5,DISC 5
+CD5,Disc 05
+CD5,Disc 5
+CD5,Disc 5of5
+CD5,Disc5
+CD5,Disk 5
+CD5,cd5
+CD5,cd 5
+CD5,cd05
+CD5,cd 05
+CD5,disc 05
+CD5,disc05
+CD5,disc 5
+CD5,disc5
