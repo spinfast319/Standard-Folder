@@ -54,6 +54,7 @@ Artwork,scans
 Artwork,sleeves
 Artwork,Ártwork
 Artwork,Packaging
+Artwork,Pixels
 Info,+Extra
 Info,.spectros
 Info,00 - Extras

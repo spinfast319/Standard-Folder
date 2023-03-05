@@ -17,14 +17,21 @@ import shutil  # Imports functionality that lets you copy files and directory
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 #  Set your directory here
-directory_to_check = "M:\Python Test Environment\Albums" # Which directory do you want to start with?
+directory_to_check = "M:\PROCESS" # Which directory do you want to start with?
 log_directory = "M:\Python Test Environment\Logs"  # Which directory do you want the log in?
+sort_directory = "M:\PROCESS-SORT\Sort - Non-standard Folders"  # Directory to move albums with non standard folder names in them to so you can manually fix them
 
 # Set whether you are using nested folders or have all albums in one directory here
 # If you have all your ablums in one music directory Music/Album_name then set this value to 1
 # If you have all your albums nest in a Music/Artist/Album style of pattern set this value to 2
 # The default is 1
 album_depth = 2
+
+# Set whether you want to move folders that have missing final genre tags to a folder so they can be dealt with manually later# creates the list of albums that need to be moved post sorting
+# If you want to move your albums set move_flag to True
+# If you do NOT want to move your albums set move_flag to False
+# The folders will be logged either way so you can always see which albums were missing final genre tags.
+move_flag = True
 
 # Establishes the counters for completed albums and missing origin files
 total_count = 0
@@ -33,6 +40,7 @@ error_message = 0
 rename_count = 0    
 nonstandard_folder = 0
 renamed_folder = 0
+move_count = 0
 
 
 # identifies album directory level
@@ -44,12 +52,14 @@ album_location = segments + album_depth
 move_list = []
 folder_set = set()
 rename_list = []
+move_list_name = []
+
 
 # A function to log events
 def log_outcomes(directory, log_name, message, log_list):
     global log_directory
 
-    script_name = "Origin Write Tags Script"
+    script_name = "Standardize Folders Script"
     today = datetime.datetime.now()
     log_name = f"{log_name}.txt"
     album_name = directory.split(os.sep)
@@ -92,7 +102,7 @@ def summary_text():
     print("")
     print(f"This script wrote tags for {track_count} tracks in {count} folders out of {flac_folder_count} folders for {total_count} albums.")
     if move_count != []:
-        print(f"The script moved {move_count} albums that were missing final genres so you can fix them manually.")
+        print(f"The script moved {move_count} albums that non-standard folder names in them so you can fix them manually.")
     print("This script looks for potential missing files or errors. The following messages outline whether any were found.")
 
     error_status = error_exists(parse_error)
@@ -154,6 +164,7 @@ def standardize_directory(directory,album_location,folder_map):
     global rename_list
     global nonstandard_folder
     global renamed_folder
+    global move_list
     
     skip_list = ["Artwork", "Info"]
     
@@ -206,6 +217,9 @@ def standardize_directory(directory,album_location,folder_map):
                         pass
                
             if match_flag == False:
+                # adds the non-standard directory name to the list
+                old_name = os.path.join(directory, i)
+                move_list_name.append(old_name)  
                 # log the folders that don't match a known pattern for manual intervention
                 print(f"--Logged folder that doesn't match a known pattern: {i}")
                 log_name = "nonstandard_folder"
@@ -213,6 +227,7 @@ def standardize_directory(directory,album_location,folder_map):
                 log_list = None
                 log_outcomes(directory, log_name, log_message, log_list)
                 nonstandard_folder += 1  # variable will increment every loop iteration
+                move_location(directory)
     else:
         print("No subfolders to standardize.")
  
@@ -307,6 +322,53 @@ def rename_folders(rename_list):
             print("Renaming completed.")
 
         rename_count += 1  # variable will increment every loop iteration    
+        
+# A function to build the location the files should be moved to
+def move_location(directory):
+    global sort_directory
+    global move_list
+    global album_depth
+
+    print(f"MOVE SOURCE: {directory}")
+    # create target path
+
+    # get album name or artist-album name and create target path
+    path_parths = directory.split(os.sep)
+    if album_depth == 1:
+        album_name = path_parths[-1]
+        target = os.path.join(sort_directory, album_name)
+        print(f"MOVE TARGET: {target}")
+    elif album_depth == 2:
+        artist_name = path_parths[-2]
+        album_name = path_parths[-1]
+        target = os.path.join(sort_directory, artist_name, album_name)
+        print(f"MOVE TARGET: {target}")
+
+    print("--This should be moved to the Genre Sort folder and has been added to the move list.")
+    # make the pair a tupple
+    move_pair = (directory, target)
+    # adds the tupple to the list
+    move_list.append(move_pair)        
+        
+# A function to move albums to the correct folder
+def move_albums(move_list):
+    global move_count
+
+    # Loop through the list of albums to move
+    for i in move_list:
+
+        # Break each entry into a source and target
+        start_path = i[0]
+        target = i[1]
+
+        # Move them to the folders they belong in
+        print("")
+        print("Moving.")
+        print(f"--Source: {start_path}")
+        print(f"--Destination: {target}")
+        shutil.move(start_path, target)
+        print("Move completed.")
+        move_count += 1  # variable will increment every loop iteration        
     
 def write_list(folder_set):
     global list_directory
@@ -374,6 +436,31 @@ def main():
         print("--No folders needed renaming.")
     else:
         rename_folders(rename_list) 
+    
+    # List non-standard folder names    
+    print("")
+    print("Part 3: Non-standard folder names")    
+    if move_list_name == []:
+        print("--No folders had non-standard names.")
+    else:
+        for i in move_list_name:
+            print (f"--{i}") 
+    
+    # Move the albums to the folders the need to be sorted into
+    if move_flag == True:
+
+        # Change directory so the album directory can be moved and move them
+        os.chdir(log_directory)
+
+        print("")
+        print("Part 4: Moving")
+
+        # Move the albums
+        if move_list == []:
+            print("--No albums needed moving.")
+        else:
+            move_albums(move_list)    
+    
     
     print("")   
     print(f'This script renamed {rename_count} folders.')  
