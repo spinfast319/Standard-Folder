@@ -4,7 +4,7 @@
 # The taxonomy is Artwork, Info, CD1, CD2, etc.  It will maintain text after the CD seprated by a dash if it can.
 # For albums that it can't make sense of it will log and move those to another directory for you to follow-up on later.
 # It it designed to handle albums with artwork folders or multiple disc folders in them. It can also handle specials characters.
-# It has been tested and works in both Ubuntu Linux and Windows 10.
+# It has been tested and works in both and Windows 10.
 
 # Import dependencies
 import os  # Imports functionality that let's you interact with your operating system
@@ -27,7 +27,8 @@ sort_directory = "M:\Python Test Environment\Sort - Non-standard Folders"  # Dir
 # The default is 1
 album_depth = 1
 
-# Set whether you want to move folders that have missing final genre tags to a folder so they can be dealt with manually later# creates the list of albums that need to be moved post sorting
+# Set whether you want to move folders that have missing final genre tags to a folder so they can be dealt with manually later
+# creates the list of albums that need to be moved post sorting
 # If you want to move your albums set move_flag to True
 # If you do NOT want to move your albums set move_flag to False
 # The folders will be logged either way so you can always see which albums were missing final genre tags.
