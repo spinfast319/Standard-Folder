@@ -1,7 +1,7 @@
 # Standard-Folder
 ### A python script that loops through your music directory and looks in each album folder. If it finds sub-directories it reneames the to a standard taxonomy.
 
-There are many ways that people name subfolders inside music album folders.  Sub-direcotries with artwork can be named many things though artwork or covers are most common.  When releases are broken into multiple parts they are often named CD1, CD2 or Disc 1, Disc 2 but an almost infinite variety of approaches are taken.  This script seeks to standardize those folder names into a common taxonomy.  It uses _Artwork_ for album related scans and art, _Info_ for ripping info, lineage, reviews etc, and _CD1_,_CD2_,etc as the fomart for multiple discs.  It uses file that maps most common aliases and some regular expressions to deal with variants.  It keeps track of what is renames and logs it. 
+There are many ways that people name subfolders inside music album folders.  Sub-direcotries with artwork can be named many things though artwork or covers are most common.  When releases are broken into multiple parts they are often named CD1, CD2 or Disc 1, Disc 2 but an almost infinite variety of approaches are taken.  This script seeks to standardize those folder names into a common taxonomy.  It uses _Artwork_ for album related scans and art, _Info_ for ripping info, lineage, reviews etc, and _CD1_, _CD2_, etc as the fomart for multiple discs.  It uses file that maps most common aliases and some regular expressions to deal with variants.  It keeps track of what is renames and logs it. 
 
 If it encounters a sub directory that doesn't map to a known pattern it will first log it and then move the whole album to a folder where it can be edited by hand.
 
