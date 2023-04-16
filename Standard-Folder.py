@@ -17,27 +17,28 @@ import shutil  # Imports functionality that lets you copy files and directory
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 #  Set your directory here
-directory_to_check = "M:\PROCESS" # Which directory do you want to start with?
+directory_to_check = "M:\Python Test Environment\Albums"  # Which directory do you want to start with?
 log_directory = "M:\Python Test Environment\Logs"  # Which directory do you want the log in?
-sort_directory = "M:\PROCESS-SORT\Sort - Non-standard Folders"  # Directory to move albums with non standard folder names in them to so you can manually fix them
+sort_directory = "M:\Python Test Environment\Sort - Non-standard Folders"  # Directory to move albums with non standard folder names in them to so you can manually fix them
 
 # Set whether you are using nested folders or have all albums in one directory here
 # If you have all your ablums in one music directory Music/Album_name then set this value to 1
 # If you have all your albums nest in a Music/Artist/Album style of pattern set this value to 2
 # The default is 1
-album_depth = 2
+album_depth = 1
 
 # Set whether you want to move folders that have missing final genre tags to a folder so they can be dealt with manually later# creates the list of albums that need to be moved post sorting
 # If you want to move your albums set move_flag to True
 # If you do NOT want to move your albums set move_flag to False
 # The folders will be logged either way so you can always see which albums were missing final genre tags.
+# The default is True
 move_flag = True
 
 # Establishes the counters for completed albums and missing origin files
 total_count = 0
 folder_count = 0
 error_message = 0
-rename_count = 0    
+rename_count = 0
 nonstandard_folder = 0
 renamed_folder = 0
 move_count = 0
@@ -95,7 +96,7 @@ def summary_text():
     global track_count
     global missing_final_genre
     global move_count
-    global flac_folder_count    
+    global flac_folder_count
     global nonstandard_folder
     global renamed_folder
 
@@ -122,6 +123,7 @@ def summary_text():
         print("Check the logs to see which folders had errors and what they were and which tracks had metadata written to them.")
     else:
         print("There were no errors.")
+
 
 # A function to check whether the directory is a an album or a sub-directory
 def level_check(directory):
@@ -150,25 +152,27 @@ def level_check(directory):
         print("--This is an artist folder.")
         return False
 
-def collect_directory(directory,album_location):
+
+def collect_directory(directory, album_location):
     global folder_count
     global folder_set
-    
-    subfolders = [ f.name for f in os.scandir(directory) if f.is_dir() ]
+
+    subfolders = [f.name for f in os.scandir(directory) if f.is_dir()]
     if subfolders:
         for i in subfolders:
             folder_set.add(i)
     folder_count += 1  # variable will increment every loop iteration
-    
-def standardize_directory(directory,album_location,folder_map):
+
+
+def standardize_directory(directory, album_location, folder_map):
     global rename_list
     global nonstandard_folder
     global renamed_folder
     global move_list
-    
+
     skip_list = ["Artwork", "Info"]
-    
-    subfolders = [ f.name for f in os.scandir(directory) if f.is_dir() ]
+
+    subfolders = [f.name for f in os.scandir(directory) if f.is_dir()]
     if subfolders:
         print("Go forth and standardize.")
         print("--Subfolders Present:")
@@ -190,7 +194,7 @@ def standardize_directory(directory,album_location,folder_map):
                 print("No subfolders to standardize.")
                 match_flag = True
                 pass
-            else:    
+            else:
                 for j in folder_map:
                     if i == j[1]:
                         print(f"----Matching: {i} is the same as {j[1]}.")
@@ -200,12 +204,12 @@ def standardize_directory(directory,album_location,folder_map):
                         new_name = j[0]
                         old_path = os.path.join(directory, i)
                         new_path = os.path.join(directory, j[0])
-                        
+
                         # make the pair a tupple
-                        rename_paths = (old_path,new_path,old_name,new_name)
+                        rename_paths = (old_path, new_path, old_name, new_name)
                         # adds the tupple to the list
-                        rename_list.append(rename_paths)        
-                        
+                        rename_list.append(rename_paths)
+
                         # log the folders that got renamed
                         print(f"--Logged folder that got renamed: {i} to {j[0]}")
                         log_name = "renamed_folder"
@@ -215,11 +219,11 @@ def standardize_directory(directory,album_location,folder_map):
                         renamed_folder += 1  # variable will increment every loop iteration
                     else:
                         pass
-               
+
             if match_flag == False:
                 # adds the non-standard directory name to the list
                 old_name = os.path.join(directory, i)
-                move_list_name.append(old_name)  
+                move_list_name.append(old_name)
                 # log the folders that don't match a known pattern for manual intervention
                 print(f"--Logged folder that doesn't match a known pattern: {i}")
                 log_name = "nonstandard_folder"
@@ -230,20 +234,21 @@ def standardize_directory(directory,album_location,folder_map):
                 move_location(directory)
     else:
         print("No subfolders to standardize.")
- 
+
+
 def load_folder_map():
-        
+
     folder_map_list = []
 
-    file = open(os.path.join(__location__, 'folder_map.txt'), 'r')
+    file = open(os.path.join(__location__, "folder_map.txt"), "r")
 
     for line in file.readlines():
-        fname = line.rstrip().split(',') #using rstrip to remove the \n
+        fname = line.rstrip().split(",")  # using rstrip to remove the \n
         folder_map_list.append(fname)
-        
-    return folder_map_list    
-    
-    
+
+    return folder_map_list
+
+
 # A function to rename folders from the non-standard names to the standard ones
 def rename_folders(rename_list):
     global rename_count
@@ -254,33 +259,33 @@ def rename_folders(rename_list):
         # Break each entry into the old name and the new name
         old_path = i[0]
         new_path = i[1]
-        old_name = i[2] 
+        old_name = i[2]
         new_name = i[3]
-        
+
         # List the final path conventions so you can deal with OS case insensitivity before you check to see if a folder is identical
         swap_case_list = ["artwork", "info"]
-        
+
         print("")
         print("Renaming.")
-        
+
         # Check swap out case sensitive names that are identical
         if old_name in swap_case_list:
             # Rename them
             print(f"--Source: {old_path}")
             print(f"--Destination: {new_path}")
-            os.rename(old_path,new_path)
+            os.rename(old_path, new_path)
             print("Renaming completed.")
         elif re.match(r"^cd(\d+) \- ", old_name):
             # Rename them
             print(f"--Source: {old_path}")
             print(f"--Destination: {new_path}")
-            os.rename(old_path,new_path)
+            os.rename(old_path, new_path)
             print("Renaming completed.")
         elif re.match(r"\bcd(\d+)\b", old_name):
             # Rename them
             print(f"--Source: {old_path}")
             print(f"--Destination: {new_path}")
-            os.rename(old_path,new_path)
+            os.rename(old_path, new_path)
             print("Renaming completed.")
         # Check to see if a folder of the same name already exists in the directory
         elif os.path.exists(new_path):
@@ -298,7 +303,7 @@ def rename_folders(rename_list):
                 if os.path.exists(dst_path):
                     # renames and moves files
                     print("--A file with the same name already exists, renaming file.")
-                    newf = "new_" + f 
+                    newf = "new_" + f
                     new_src_path = os.path.join(old_path, newf)
                     os.rename(src_path, new_src_path)
                     new_dst_path = os.path.join(new_path, newf)
@@ -309,20 +314,21 @@ def rename_folders(rename_list):
                     # moves files
                     print(f"--Moving files")
                     shutil.move(src_path, dst_path)
-            # delete old directory     
+            # delete old directory
             print("--Deleting old directory.")
             os.rmdir(old_path)
             print("Renaming completed.")
-        else:    
+        else:
             print(f"--A directory with the name {new_name} does not exist in this folder.")
             # Rename them
             print(f"--Source: {old_path}")
             print(f"--Destination: {new_path}")
-            os.rename(old_path,new_path)
+            os.rename(old_path, new_path)
             print("Renaming completed.")
 
-        rename_count += 1  # variable will increment every loop iteration    
-        
+        rename_count += 1  # variable will increment every loop iteration
+
+
 # A function to build the location the files should be moved to
 def move_location(directory):
     global sort_directory
@@ -348,8 +354,9 @@ def move_location(directory):
     # make the pair a tupple
     move_pair = (directory, target)
     # adds the tupple to the list
-    move_list.append(move_pair)        
-        
+    move_list.append(move_pair)
+
+
 # A function to move albums to the correct folder
 def move_albums(move_list):
     global move_count
@@ -368,11 +375,12 @@ def move_albums(move_list):
         print(f"--Destination: {target}")
         shutil.move(start_path, target)
         print("Move completed.")
-        move_count += 1  # variable will increment every loop iteration        
-    
+        move_count += 1  # variable will increment every loop iteration
+
+
 def write_list(folder_set):
     global list_directory
-    
+
     list_name = "unique_subfolders.txt"
     list_path = os.path.join(list_directory, list_name)
 
@@ -380,11 +388,12 @@ def write_list(folder_set):
         list_name.write(" \n")
         list_name.write("Unique Subfolders \n")
         list_name.write("----------------- \n")
-        list_name.write('\n'.join(folder_set)) 
+        list_name.write("\n".join(folder_set))
         list_name.write(" ")
         list_name.write(" \n")
-        list_name.close()        
-    
+        list_name.close()
+
+
 # The main function that controls the flow of the script
 def main():
     global move_list
@@ -394,37 +403,35 @@ def main():
     global rename_count
     global album_depth
 
-
     # Get all the subdirectories of directory_to_check recursively and store them in a list:
     directories = [os.path.abspath(x[0]) for x in os.walk(directory_to_check)]
-    directories.remove(os.path.abspath(directory_to_check)) # If you don't want your main directory included
-    
+    directories.remove(os.path.abspath(directory_to_check))  # If you don't want your main directory included
+
     # Load the folder_map list
     folder_map = load_folder_map()
 
     #  Run a loop that goes into each directory identified in the list and identifies folders that need to be renamed or moved
     for i in directories:
-        os.chdir(i)         # Change working Directory
+        os.chdir(i)  # Change working Directory
         # establish directory level
         is_album = level_check(i)
-        
+
         # make a filter for itunes and musicbee folders
         path_segments = i.split(os.sep)
         if album_depth == 1:
             parent_folder = path_segments[-1]
         elif album_depth == 2:
-            parent_folder = path_segments[-2]       
-            
+            parent_folder = path_segments[-2]
+
         if parent_folder == "iTunes":
             pass
         elif parent_folder == "MusicBee":
             pass
-        else:   
+        else:
             # standardize folder names
             if is_album:
-                standardize_directory(i,album_location,folder_map)      # Run your function
-     
-     
+                standardize_directory(i, album_location, folder_map)  # Run your function
+
     # Change directory so the folders can be renamed and moved
     os.chdir(log_directory)
 
@@ -435,17 +442,17 @@ def main():
     if rename_list == []:
         print("--No folders needed renaming.")
     else:
-        rename_folders(rename_list) 
-    
-    # List non-standard folder names    
+        rename_folders(rename_list)
+
+    # List non-standard folder names
     print("")
-    print("Part 3: Non-standard folder names")    
+    print("Part 3: Non-standard folder names")
     if move_list_name == []:
         print("--No folders had non-standard names.")
     else:
         for i in move_list_name:
-            print (f"--{i}") 
-    
+            print(f"--{i}")
+
     # Move the albums to the folders the need to be sorted into
     if move_flag == True:
 
@@ -459,13 +466,12 @@ def main():
         if move_list == []:
             print("--No albums needed moving.")
         else:
-            move_albums(move_list)    
-    
-    
-    print("")   
-    print(f'This script renamed {rename_count} folders.')  
+            move_albums(move_list)
 
-    '''# Print the list of unique subfolders.
+    print("")
+    print(f"This script renamed {rename_count} folders.")
+
+    """# Print the list of unique subfolders.
     print("")
     print("Unique Subfolders")
     folder_set = sorted(folder_set)
@@ -475,7 +481,7 @@ def main():
       
 
     # Write the subfolder names to a text file
-    #write_list(folder_set)   ''' 
+    #write_list(folder_set)   """
 
 
 if __name__ == "__main__":
