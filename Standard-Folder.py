@@ -17,8 +17,8 @@ import shutil  # Imports functionality that lets you copy files and directory
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 #  Set your directory here
-directory_to_check = "M:\Python Test Environment\Albums"  # Which directory do you want to start with?
-log_directory = "M:\Python Test Environment\Logs"  # Which directory do you want the log in?
+directory_to_check = "M:\PROCESS"  # Which directory do you want to start with?
+log_directory = "M:\PROCESS-LOGS\Logs"  # Which directory do you want the log in?
 sort_directory = "M:\Python Test Environment\Sort - Non-standard Folders"  # Directory to move albums with non standard folder names in them to so you can manually fix them
 
 # Set whether you are using nested folders or have all albums in one directory here
