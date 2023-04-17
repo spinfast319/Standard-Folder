@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # Standardize Sub Directories
 # author: hypermodified
 # This python script loops through  your music directory and looks in each album folder. If it finds sub-directories it reneames the to a standard taxonomy.
