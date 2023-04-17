@@ -1,13 +1,21 @@
-# Standard-Folder
+# Standard-Folder (Beta)
 ### A python script that loops through your music directory and looks in each album folder. If it finds sub-directories it reneames the to a standard taxonomy.
 
-There are many ways that people name subfolders inside music album folders.  Sub-direcotries with artwork can be named many things though artwork or covers are most common.  When releases are broken into multiple parts they are often named CD1, CD2 or Disc 1, Disc 2 but an almost infinite variety of approaches are taken.  This script seeks to standardize those folder names into a common taxonomy.  It uses _Artwork_ for album related scans and art, _Info_ for ripping info, lineage, reviews etc, and _CD1_, _CD2_, etc as the fomart for multiple discs.  It uses file that maps most common aliases and some regular expressions to deal with variants.  It keeps track of what is renames and logs it. 
+There are many ways that people name subfolders inside music album folders.  Sub-direcotries with artwork can be named many things though artwork or covers are most common.  When releases are broken into multiple parts they are often named CD1, CD2 or Disc 1, Disc 2 but an almost infinite variety of approaches are taken.  This script seeks to standardize those folder names into a common taxonomy. The taxonomy is as follows:
 
-If it encounters a sub directory that doesn't map to a known pattern it will first log it and then move the whole album to a folder where it can be edited by hand.
+- The script uses _Artwork_ for album related scans, covers, art, etc
+- The script uses _Info_ for ripping info, lineage, reviews etc, 
+- The script uses _CD1_, _CD2_, etc as the fomart for multiple discs.  
+
+It uses [a file that maps most common aliases](https://github.com/spinfast319/Standard-Folder/blob/main/folder_map.txt) and some regular expressions to deal with common variants.  If it encounters a sub directory that doesn't map to a known pattern it will first log it and then move the whole album to a folder where it can be edited by hand. It keeps track of what is renames and what it moves and provies a summary in the terminal as well as logging it. 
 
 It is designed specifically for albums with artwork folders or multiple disc folders in them and ignores those without. It can also handle specials characters. It has been tested and works in Windows 10.
 
-This script is still in beta and has some known bugs especially moving albums with multiple subfolders in them.  If it is causing too many issues you can turn off the moving feature and just check the logs. The script also needs it logging and summary text to be finalized. I might add some more regular expressions to automatically handle more variations of common folder names in the future as well.
+This script is meant to work in conjunction with other scripts in order to manage a large music library when the source of the music has good metadata you want to use to organize it.  You can find an overview of the scripts and workflow at [Origin-Music-Management](https://github.com/spinfast319/Origin-Music-Management). 
+
+## Beta
+
+This script is still in beta and has some known bugs especially moving albums with multiple subfolders in them.  If it is causing too many issues you can turn off the moving feature and just check the logs. The script also needs it's logging and summary text to be finalized. I might add some more regular expressions to automatically handle more variations of common folder names in the future as well.
 
 ## Install and set up
 1) Clone this script where you want to run it.
