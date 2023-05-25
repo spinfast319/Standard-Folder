@@ -15,19 +15,21 @@ import datetime  # Imports functionality that lets you make timestamps
 import re  # Imports functionality to use regular expressions
 import shutil  # Imports functionality that lets you copy files and directory
 
+import origin_script_library as osl  # Imports common code used across all origin scripts
+
 #  Set the location of the local directory
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
 #  Set your directory here
 directory_to_check = "M:\PROCESS"  # Which directory do you want to start with?
 log_directory = "M:\PROCESS-LOGS\Logs"  # Which directory do you want the log in?
-sort_directory = "M:\Python Test Environment\Sort - Non-standard Folders"  # Directory to move albums with non standard folder names in them to so you can manually fix them
+sort_directory = "M:\PROCESS-SORT\Folders Non-standard"  # Directory to move albums with non standard folder names so you can manually fix them
 
 # Set whether you are using nested folders or have all albums in one directory here
 # If you have all your ablums in one music directory Music/Album_name then set this value to 1
 # If you have all your albums nest in a Music/Artist/Album style of pattern set this value to 2
 # The default is 1
-album_depth = 1
+album_depth = 2
 
 # Set whether you want to move folders that have missing final genre tags to a folder so they can be dealt with manually later
 # creates the list of albums that need to be moved post sorting
@@ -355,6 +357,8 @@ def move_location(directory):
 
     print("--This should be moved to the Genre Sort folder and has been added to the move list.")
     # make the pair a tupple
+    print(directory)
+    print(target)
     move_pair = (directory, target)
     # adds the tupple to the list
     move_list.append(move_pair)
@@ -406,9 +410,8 @@ def main():
     global rename_count
     global album_depth
 
-    # Get all the subdirectories of directory_to_check recursively and store them in a list:
-    directories = [os.path.abspath(x[0]) for x in os.walk(directory_to_check)]
-    directories.remove(os.path.abspath(directory_to_check))  # If you don't want your main directory included
+    # Get all the subdirectories of album_directory recursively and store them in a list
+    directories = osl.set_directory(directory_to_check)
 
     # Load the folder_map list
     folder_map = load_folder_map()
@@ -469,7 +472,8 @@ def main():
         if move_list == []:
             print("--No albums needed moving.")
         else:
-            move_albums(move_list)
+            print(move_list)
+            # move_albums(move_list)
 
     print("")
     print(f"This script renamed {rename_count} folders.")
